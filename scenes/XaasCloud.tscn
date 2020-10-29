@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/images/Screenshot_from_2020-10-10_15-23-09-removebg-preview.png" type="Texture" id=1]
+[ext_resource path="res://scripts/Cloud.gd" type="Script" id=2]
+[ext_resource path="res://assets/images/Screenshot_from_2020-10-10_15-20-28-removebg-preview.png" type="Texture" id=3]
+
+[node name="XaasCloud" type="KinematicBody2D"]
+script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+centered = false
+
+[node name="cover" type="Sprite" parent="Sprite"]
+position = Vector2( -10, 0 )
+texture = ExtResource( 3 )
+centered = false
