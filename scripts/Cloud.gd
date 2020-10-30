@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
 
-var cloudScale = Vector2(0.18, 0.18)
+var cloudScale = Vector2(1, 1)
 var start = 0
 var speed = 200
 var velocity = Vector2()
@@ -29,6 +29,7 @@ func _process(delta):
 	if(!get_parent().isLevelStarted()):
 		return
 	if(speed > 0):
+		get_parent().checkOverlap()
 		speed = speed - 1
 		if(cloudType == 1):
 			get_node("Sprite/cover").modulate.a += 0.01
@@ -47,19 +48,25 @@ func _process(delta):
 
 	if(position.distance_to(nextPos) < 5):
 		nextPos = generateRandomPos()
+#		velocity = position.direction_to(nextPos) * speed * delta
 		velocity = position.direction_to(nextPos) * speed
 	if position.distance_to(nextPos) > 5:
-		velocity = move_and_slide(velocity)
+		move_and_slide(velocity)
+#		var collisionObj = move_and_collide(velocity)
+#		if(collisionObj != null):
+#			nextPos = generateRandomPos()
+#			velocity = position.direction_to(nextPos) * speed * delta
 
 func _input(event):
 	if(event is InputEventMouseButton and event.is_pressed() and
-	isMouseOver(event.position)):
+	isMouseOver(event.position) and speed <= 0):
+		get_tree().set_input_as_handled()
 		if(cloudType == 1):
 			get_node("Sprite/cover").modulate.a = 0
 			get_parent().increaseNumOfFoundedClouds()
 		else:
-			print("Wronge :((")
-		get_tree().set_input_as_handled()
+			get_parent().increaseNumOfFails()
+		
 
 func generateRandomPos():
 	var nextRandX = 2*(randi()%maxDist) - maxDist
