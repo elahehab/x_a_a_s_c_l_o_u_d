@@ -26,7 +26,8 @@ func getSize():
 	
 
 func _process(delta):
-#	pass
+	if(!get_parent().isLevelStarted()):
+		return
 	if(speed > 0):
 		speed = speed - 1
 		if(cloudType == 1):
@@ -55,6 +56,7 @@ func _input(event):
 	isMouseOver(event.position)):
 		if(cloudType == 1):
 			get_node("Sprite/cover").modulate.a = 0
+			get_parent().increaseNumOfFoundedClouds()
 		else:
 			print("Wronge :((")
 		get_tree().set_input_as_handled()
@@ -95,4 +97,3 @@ func isMouseOver(mousePos):
 	else:
 		return false
 		
-

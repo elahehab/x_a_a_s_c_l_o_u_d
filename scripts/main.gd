@@ -6,9 +6,11 @@ const XAASCLOUD = preload("res://scenes/XaasCloud.tscn")
 
 var numOfWClouds = 3
 var numOfHClouds = 3
-var numOfClouds = numOfWClouds*numOfHClouds #6, 12, 20
-var numOfXClouds = 3 #1-9
+var numOfClouds = numOfWClouds*numOfHClouds
+var numOfXClouds = 3 
+var numOfFoundedClouds = 0
 var clouds = []
+var start = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -55,8 +57,20 @@ func _ready():
 			cloud.position = Vector2(cloudx, cloudy)
 			add_child(cloud)
 	
+	var timer = get_node("Timer")
+	timer.connect("timeout", self, "startLevel")
+	timer.start(1)
+	
+func increaseNumOfFoundedClouds():
+	numOfFoundedClouds += 1
+	if(numOfFoundedClouds == numOfXClouds):
+		print("you won")
 
+func startLevel():
+	start = 1
 
+func isLevelStarted():
+	return start
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
