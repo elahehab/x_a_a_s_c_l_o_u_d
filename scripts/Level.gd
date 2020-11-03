@@ -118,6 +118,7 @@ func levelFailed():
 	
 func checkOverlap():
 	var bodies = get_overlapping_bodies()
+	print(bodies.size())
 	if(bodies.size() > 0):
 		print(bodies)
 #	for i in range(clouds.size() - 1):

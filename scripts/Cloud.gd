@@ -29,7 +29,6 @@ func _process(delta):
 	if(!get_parent().isLevelStarted()):
 		return
 	if(speed > 0):
-		get_parent().checkOverlap()
 		speed = speed - 1
 		if(cloudType == 1):
 			get_node("Sprite/cover").modulate.a += 0.01

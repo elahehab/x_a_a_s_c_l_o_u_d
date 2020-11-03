@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scenes/background.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scripts/RestartButton.gd" type="Script" id=2]
+[ext_resource path="res://assets/images/restart.png" type="Texture" id=3]
+
+[node name="LevelFailedScreen" type="Node2D"]
+
+[node name="background" parent="." instance=ExtResource( 1 )]
+
+[node name="Button" type="Button" parent="."]
+margin_left = 174.475
+margin_top = 188.82
+margin_right = 422.475
+margin_bottom = 294.82
+flat = true
+script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="Button"]
+position = Vector2( 123, 56 )
+scale = Vector2( 0.397, 0.397 )
+texture = ExtResource( 3 )
