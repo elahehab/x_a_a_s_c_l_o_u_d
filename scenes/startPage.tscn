@@ -9,14 +9,14 @@
 [node name="background" parent="." instance=ExtResource( 1 )]
 
 [node name="Button" type="Button" parent="."]
-margin_left = 136.0
-margin_top = 248.0
-margin_right = 437.0
-margin_bottom = 379.0
+margin_left = 183.701
+margin_top = 330.151
+margin_right = 484.701
+margin_bottom = 461.151
 flat = true
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="Button"]
-position = Vector2( 153.215, 65.4371 )
+position = Vector2( 147.915, 65.437 )
 scale = Vector2( 0.495, 0.495 )
 texture = ExtResource( 3 )

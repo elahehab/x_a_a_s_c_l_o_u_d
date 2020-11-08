@@ -1,27 +1,28 @@
 extends KinematicBody2D
 
 
-var cloudScale = Vector2(1, 1)
+var cloudScale = Vector2(0.9, 0.9)
 var start = 0
 var speed = 200
 var velocity = Vector2()
 var maxDist = 50
 var nextPos = Vector2()
 var cloudType = 0 #0: normal cloud, 1: xaas cloud
+var cloudNumber
 
 func _ready():
 	randomize()
 	start = 0
-	get_node("Sprite").scale = cloudScale
+	get_node("Area2D/Sprite").scale = cloudScale
 	nextPos = position
-	if(get_node("Sprite").has_node("cover")):
+	if(get_node("Area2D/Sprite").has_node("cover")):
 		cloudType = 1
 	if(cloudType == 1):
-		get_node("Sprite/cover").modulate.a = 0
+		get_node("Area2D/Sprite/cover").modulate.a = 0
 
 
 func getSize():
-	var size = get_node("Sprite").get_rect().size
+	var size = get_node("Area2D/Sprite").get_rect().size
 	return size*cloudScale
 	
 
@@ -29,11 +30,18 @@ func _process(delta):
 	if(!get_parent().isLevelStarted()):
 		return
 	if(speed > 0):
-		speed = speed - 1
+		if(get_node("Area2D").get_overlapping_areas().size() > 0):
+			if(speed > 100):
+				speed = speed - 1
+#			else:
+#				speed = 100
+		else:
+			speed = speed - 1
+			
 		if(cloudType == 1):
-			get_node("Sprite/cover").modulate.a += 0.01
-			if(get_node("Sprite/cover").modulate.a > 1):
-				get_node("Sprite/cover").modulate.a = 1
+			get_node("Area2D/Sprite/cover").modulate.a += 0.01
+			if(get_node("Area2D/Sprite/cover").modulate.a > 1):
+				get_node("Area2D/Sprite/cover").modulate.a = 1
 	else:
 		speed = 0
 		return
@@ -58,11 +66,11 @@ func _process(delta):
 
 func _input(event):
 	if(event is InputEventMouseButton and event.is_pressed() and
-	isMouseOver(event.position) and speed <= 0):
+	isMouseOver(event.position) and get_parent().allCloudsStopped()):
 		get_tree().set_input_as_handled()
 		if(cloudType == 1):
-			get_node("Sprite/cover").modulate.a = 0
-			get_parent().increaseNumOfFoundedClouds()
+			get_node("Area2D/Sprite/cover").modulate.a = 0
+			get_parent().xaasCloudFound(cloudNumber)
 		else:
 			get_parent().increaseNumOfFails()
 		
@@ -102,4 +110,9 @@ func isMouseOver(mousePos):
 		return true
 	else:
 		return false
-		
+
+func setCloudNumber(_cloudNum):
+	cloudNumber = _cloudNum
+	
+func getCloudNumber():
+	return cloudNumber

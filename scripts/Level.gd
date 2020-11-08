@@ -8,35 +8,45 @@ var numOfHClouds
 var numOfClouds
 var numOfXClouds
 var numOfAllowedFail
+var vDist = 40
+var hDist = 40
 
-var numOfFoundedClouds = 0
+var xCloudNums = []
 var numOfFails = 0
 
 var clouds = []
 
 var start = 0
 
-# xcloud, w, h
+# xcloud, w, h, numOfFault
 var levels = [
-[1, 2, 2, 0],
-[2, 3, 2, 0],
-[2, 3, 3, 1],
-[3, 3, 3, 0],
-[3, 4, 3, 2],
-[3, 4, 3, 1],
-[3, 4, 3, 0],
-[3, 4, 4, 1],
-[4, 4, 4, 2],
-[4, 4, 4, 1],
-[4, 4, 4, 0],
-[5, 4, 4, 2],
-[5, 4, 4, 1],
-[5, 4, 4, 0],
-[5, 5, 4, 0],
-[5, 5, 5, 2],
-[5, 5, 5, 1],
-[5, 5, 5, 0],
-[6, 5, 5, 2],
+[1, 2, 2, 0], #0
+[2, 3, 2, 0], #1
+[2, 2, 3, 1], #2
+[3, 2, 4, 0], #3
+[3, 3, 3, 2], #4
+[3, 2, 5, 1], #5
+[3, 4, 3, 0], #6
+[3, 3, 4, 1], #7
+[4, 3, 4, 2], #8
+[4, 3, 4, 2], #9
+[4, 3, 5, 1], #10
+[4, 4, 4, 0], #11
+[5, 5, 3, 2], #12
+[5, 3, 5, 1], #13
+[5, 4, 4, 0], #14
+[5, 5, 4, 0], #15
+[5, 4, 5, 2], #16
+[5, 5, 4, 1], #17
+[5, 5, 4, 0], #18
+[6, 2, 4, 2], #19
+[6, 3, 4, 1], #20
+[6, 4, 3, 1], #21
+[6, 3, 5, 0], #22
+[6, 4, 4, 0], #23
+[6, 5, 4, 0], #24
+[6, 4, 5, 0], #25
+[7, 3, 5, 0], #26
 ]
 
 func _ready():
@@ -44,7 +54,6 @@ func _ready():
 
 	var SCREEN_WIDTH = get_viewport_rect().size[0]
 	var SCREEN_HEIGHT = get_viewport_rect().size[1]
-	var xCloudNums = []
 	var availableNums = []
 	for i in range(numOfClouds):
 		availableNums.append(i)
@@ -53,9 +62,6 @@ func _ready():
 		var selected = randi()%(availableNums.size())
 		xCloudNums.append(availableNums[selected])
 		availableNums.remove(selected)
-		
-	var vDist = 10
-	var hDist = 10
 	
 	var tmpCloud = BLUECLOUD.instance()
 	var cloudW = tmpCloud.getSize()[0]
@@ -77,20 +83,24 @@ func _ready():
 			else:
 				cloud = BLUECLOUD.instance()
 			
+			cloud.setCloudNumber(cloudNumber)
 			cloud.position = Vector2(cloudx, cloudy)
 			add_child(cloud)
 			clouds.append(cloud)
 
-func increaseNumOfFoundedClouds():
-	numOfFoundedClouds += 1
-	if(numOfFoundedClouds == numOfXClouds):
-		var timer = get_node("Timer")
-		timer.connect("timeout", self, "levelSuccess")
-		timer.start(1)
+func xaasCloudFound(cloudNumber):
+	if(xCloudNums.find(cloudNumber) != -1):
+		get_node("CorrectSound").play()
+		xCloudNums.erase(cloudNumber)
+		if(xCloudNums.size() == 0):
+			var timer = get_node("Timer")
+			timer.connect("timeout", self, "levelSuccess")
+			timer.start(1)
 
 
 func increaseNumOfFails():
 	numOfFails += 1
+	get_node("WrongSound").play()
 	if(numOfFails > numOfAllowedFail):
 		var timer = get_node("Timer")
 		timer.connect("timeout", self, "levelFailed")
@@ -116,13 +126,9 @@ func levelSuccess():
 func levelFailed():
 	get_parent().levelFailed()
 	
-func checkOverlap():
-	var bodies = get_overlapping_bodies()
-	print(bodies.size())
-	if(bodies.size() > 0):
-		print(bodies)
-#	for i in range(clouds.size() - 1):
-#		for j in range(i+1, clouds.size() - 1):
-#			var c1 = clouds[i]
-#			var c2 = clouds[j]
-			
+
+func allCloudsStopped():
+	for c in clouds:
+		if(c.speed > 0):
+			return false
+	return true

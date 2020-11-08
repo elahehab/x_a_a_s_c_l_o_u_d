@@ -6,3 +6,5 @@
 script = ExtResource( 1 )
 
 [node name="Timer" type="Timer" parent="."]
+
+[node name="CorrectSound" type="AudioStreamPlayer" parent="."]

@@ -6,11 +6,11 @@
 [node name="background" type="Node2D"]
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 263.051, 211.044 )
+position = Vector2( 324.051, 304.044 )
 scale = Vector2( 1.02183, 1.02183 )
 texture = ExtResource( 1 )
 
 [node name="pngegg" type="Sprite" parent="."]
-position = Vector2( 306.613, 507.544 )
+position = Vector2( 350.613, 600.544 )
 scale = Vector2( 0.44505, 0.445051 )
 texture = ExtResource( 2 )

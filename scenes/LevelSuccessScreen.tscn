@@ -10,10 +10,10 @@
 [node name="background" parent="." instance=ExtResource( 1 )]
 
 [node name="nextLevelButton" type="Button" parent="."]
-margin_left = 175.441
-margin_top = 241.442
-margin_right = 423.441
-margin_bottom = 346.442
+margin_left = 216.349
+margin_top = 377.803
+margin_right = 464.349
+margin_bottom = 482.803
 flat = true
 script = ExtResource( 2 )
 
@@ -23,10 +23,10 @@ scale = Vector2( 0.397064, 0.397064 )
 texture = ExtResource( 3 )
 
 [node name="TakhfifButton" type="Button" parent="."]
-margin_left = 177.27
-margin_top = 112.661
-margin_right = 418.27
-margin_bottom = 221.661
+margin_left = 218.178
+margin_top = 249.022
+margin_right = 459.178
+margin_bottom = 358.022
 flat = true
 
 [node name="Sprite" type="Sprite" parent="TakhfifButton"]

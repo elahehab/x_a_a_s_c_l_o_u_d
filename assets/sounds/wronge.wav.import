@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/wronge.wav-9333c1573e597d6e5f8f7d69047d7f50.sample"
+
+[deps]
+
+source_file="res://assets/sounds/wronge.wav"
+dest_files=[ "res://.import/wronge.wav-9333c1573e597d6e5f8f7d69047d7f50.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0
